@@ -40,13 +40,24 @@ INSERT INTO marvels VALUES(24, "Venon", 78, "Neutral", "Male", 1.90, 118, "EUA",
 INSERT INTO marvels VALUES(25, "Juggernaut", 76, "Neutral", "Male", 2.87, 862, "EUA", 2, 7, 2, 7, 1, 4);
 INSERT INTO marvels VALUES(26, "Professor X", 58, "Good", "Male", 1.83, 86, "EUA", 5, 2, 2, 2, 5, 3);
 
+--What is the average popuarity rating of the marvel characters?
 SELECT AVG(popularity) FROM marvels;
+
+--Display the database where maarvel characters popularity is above average; what are their names and gender?
 SELECT gender, name FROM marvels WHERE popularity > 27;
+
+--What is the avergage skill level for fighting?
 SELECT AVG(fighting_skills) FROM marvels;
+
+--Display the database where marvel characters popularity and fighting skills are below average; what ar the names and gender?
 SELECT gender, name FROM marvels WHERE popularity < 27 AND fighting_skills < 4;
+
+--Which countries produce most popular characters (above average)?
 SELECT hometown, COUNT (*) FROM marvels
 GROUP BY hometown
 HAVING popularity > 27;
+
+--Display the 
 SELECT name, gender, hometown, popularity FROM marvels;
 SELECT COUNT (*),
 CASE
@@ -55,3 +66,4 @@ WHEN popularity > 50 THEN "GOOD"
 WHEN popularity > 25 THEN "Poor"
 ELSE "Poor"
 END AS "rating" FROM marvels
+GROUP BY popularity
