@@ -49,7 +49,7 @@ SELECT gender, name FROM marvels WHERE popularity > 27;
 --What is the avergage skill level for fighting?
 SELECT AVG(fighting_skills) FROM marvels;
 
---Display the database where marvel characters popularity and fighting skills are below average; what ar the names and gender?
+--Display the database where marvel characters popularity and fighting skills are below average; what are the names and gender?
 SELECT gender, name FROM marvels WHERE popularity < 27 AND fighting_skills < 4;
 
 --Which countries produce most popular characters (above average)?
@@ -57,7 +57,7 @@ SELECT hometown, COUNT (*) FROM marvels
 GROUP BY hometown
 HAVING popularity > 27;
 
---Display the 
+--Display the database showing how many charcters have received which rating based on popularity.
 SELECT name, gender, hometown, popularity FROM marvels;
 SELECT COUNT (*),
 CASE
@@ -66,4 +66,4 @@ WHEN popularity > 50 THEN "GOOD"
 WHEN popularity > 25 THEN "Poor"
 ELSE "Poor"
 END AS "rating" FROM marvels
-GROUP BY popularity
+GROUP BY "ratng";
