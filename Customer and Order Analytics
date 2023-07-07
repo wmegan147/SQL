@@ -76,27 +76,22 @@ GROUP BY Product
 #11. What was the average amount spent per account in February?
 SELECT sum(quantity*price)/count(cust.acctnum)
 FROM FebSales Feb
-
 LEFT JOIN customers cust
 ON FEB.orderid=cust.order_id
-
 WHERE length(orderid) = 6 
 AND orderid <> 'Order ID'
 
 #12. What was the average quantity of products purchased per account in February? 
 select sum(quantity)/count(cust.acctnum)
 FROM FebSales Feb
-
 LEFT JOIN customers cust
 ON FEB.orderid=cust.order_id
-
 WHERE length(orderid) = 6 
 AND orderid <> 'Order ID'
 
 #13. Which product brought in the most revenue in January and how much revenue did it bring in total? 
-SELECT product, 
-sum(quantity*price)
+SELECT product, sum(quantity*price) as revenue
 FROM JanSales 
 GROUP BY product
-ORDER BY sum(quantity*price) desc 
+ORDER BY revenue desc 
 LIMIT 1
