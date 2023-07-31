@@ -1,0 +1,70 @@
+#This project reveals insights about customers and their orders, employee information, and musical data for a digital media store.
+
+# The following SQL was written to answer specific questions about customers and sales data:
+
+#1. Show Customers (their full names, customer ID, and country) who are not in the US.
+SELECT firstname, lastname, customerid, country
+FROM chinook.customers
+WHERE country <> 'USA';
+
+#2. Show only the Customers from Brazil.
+SELECT *
+FROM chinook.customers
+WHERE country = 'Brazil';
+
+#3. Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
+SELECT c.FirstName, c.LastName, i.InvoiceId, i.InvoiceDate, i.BillingCountry
+FROM chinook.customers c
+LEFT JOIN chinook.invoices i
+ON c.CustomerId = i.CustomerId
+WHERE i.BillingCountry = 'Brazil';
+
+#4. Show the Employees who are Sales Agents.
+SELECT *
+FROM chinook.employees
+WHERE Title like '%agent%';
+
+#5. Find a unique/distinct list of billing countries from the Invoice table.
+select distinct BillingCountry
+from chinook.invoices;
+
+#6. Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+select i.invoiceid, c.customerid, e.firstname, e.lastname
+FROM chinook.invoices i
+JOIN chinook.customers c
+ON i.customerid = c.customerid
+JOIN chinook.employees e
+ON e.employeeid = c.supportrepid
+
+#7. Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+select c.firstname, c.lastname, c.country, e.firstname, e.lastname, i.total
+FROM chinook.customers c 
+JOIN chinook.employees e
+ON c.supportrepid = e.employeeid
+JOIN chinook.invoices i
+ON i.customerid = c.customerid;
+
+#8. How many Invoices were there in 2009?
+SELECT COUNT(Invoicedate)
+FROM chinook.invoices
+WHERE InvoiceDate like '%2009%';
+
+#9. What are the total sales for 2009?
+SELECT SUM(Total)
+FROM invoices
+WHERE InvoiceDate like '%2009%';
+
+#10. Write a query that includes the purchased track name with each invoice line ID.
+SELECT t.name, i.invoicelineid
+FROM tracks t
+JOIN invoice_items i
+ON t.trackid = i.trackid;
+
+#11. Show the total sales made by each sales agent
+SELECT c.supportrepid, e.firstname, e.lastname, ROUND(SUM(i.total)) as 'Total Sales'
+FROM customers c
+JOIN invoices i
+ON c.customerid = i.customerid
+JOIN employees e
+ON e.employeeid = c.supportrepid
+GROUP BY e.firstname
